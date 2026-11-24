@@ -17,11 +17,11 @@ std::vector<double> normalize(const std::vector<T>& values){
     std::vector<double> result;
     if (values.empty()){return result;}
     result.resize(values.size());
-    double largest = values[0];
+    int largest = values[0];
     for (T i : values){
         if (i > largest) {largest = i;}
     }
-    for (std::size_t i = 0; i < values.size(); ++i) {result[i] = values[i]/largest;}
+    for (std::size_t i = 0; i < values.size(); ++i) {result[i] = values[i]/ static_cast<double>(largest);}
     return result;
 }
 
