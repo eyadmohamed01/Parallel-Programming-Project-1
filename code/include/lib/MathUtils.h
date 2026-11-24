@@ -13,25 +13,25 @@ double sum(const std::vector<double>& values);
 std::vector<double> encodeAsOneHot(double value, std::size_t numClasses);
 
 template <typename T>
-std::vector<double> normalize(const std::vector<T>& values) {
+std::vector<double> normalize(const std::vector<T>& values){
     std::vector<double> result;
-    if (values.empty()) {
-        return result;
+    if (values.empty()){return result;}
+    result.resize(values.size());
+    double largest = values[0];
+    for (T i : values){
+        if (i > largest) {largest = i;}
     }
-    T maxElement = *std::max_element(values.begin(), values.end());
-    result.reserve(values.size());
-    for (const T& v : values) {
-        result.push_back(static_cast<double>(v) / static_cast<double>(maxElement));
-    }
+    for (std::size_t i = 0; i < values.size(); ++i) {result[i] = values[i]/largest;}
     return result;
 }
 
 template <typename T>
 std::vector<double> normalize(const std::vector<T>& values, int maxValue) {
     std::vector<double> result;
-    result.reserve(values.size());
-    for (const T& v : values) {
-        result.push_back(static_cast<double>(v) / static_cast<double>(maxValue));
+    result.resize(values.size());
+    double divisor = maxValue;
+    for (std::size_t i = 0; i < values.size(); ++i) {
+        result[i] = values[i] / divisor;
     }
     return result;
 }
