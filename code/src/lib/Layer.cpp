@@ -6,6 +6,8 @@
 #include <iostream>
 #include <utility>
 
+#include <stdexcept>
+
 namespace dnn {
 
 Layer::Layer(uint64_t id, uint64_t seed, uint64_t layerInputSize, uint64_t layerOutputSize,
@@ -98,6 +100,11 @@ void Layer::forwardPropagation(const std::vector<double>& previousLayerOutput) {
 }
 
 void Layer::backwardPropagation(const std::vector<double>& dActivationOutput, const std::vector<double>& previousLayerOutput) {
+
+    if(activationFunction == nullptr) {
+        throw std::logic_error{"No activation function assigned"};
+    }
+
     std::vector<double> dPreActivation(layerOutputSize, 0.0);
 
     for(std::size_t i = 0; i < layerOutputSize; i++) {
